@@ -1,0 +1,22 @@
+{
+  "name": "iviews-bower-resolver",
+  "version": "1.0.0",
+  "description": "i-views releases resolver for Bower",
+  "main": "dist/init.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phenomnomnominal/mercurial-bower-resolver.git"
+  },
+  "keywords": [
+    "bower-resolver"
+  ],
+  "author": "Joachim Ansorg <j.ansorg@i-views.de>",
+  "license": "MIT",
+  "dependencies": {
+    "tmp": "0.0.31",
+    "unzip-stream": "0.1.2",
+    "request": "2.81.0"
+  },
+  "devDependencies": {
+  }
+}
