@@ -10,7 +10,6 @@
   "keywords": [
     "bower-resolver"
   ],
-  "author": "Joachim Ansorg <j.ansorg@i-views.de>",
   "license": "MIT",
   "dependencies": {
     "tmp": "0.0.31",

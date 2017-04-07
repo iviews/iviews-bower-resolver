@@ -1,6 +1,6 @@
 'use strict';
 
-var resolver = require("./src/resolver.js");
+var resolver = require("../src/resolver.js");
 
 // resolver.unzipToTmpDir("iviews://viewconfigmapper/5.0.1").then(function(path) {
 //     console.log(path);

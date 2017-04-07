@@ -10,6 +10,7 @@ var unzip = require('unzip-stream');
  * @author jansorg
  */
 module.exports = (function() {
+    const BASE_URL = "http://localhost:4000/bower/";
     const SOURCE_REGEX = /^iviews:\/\/([a-zA-Z0-9_-]+)$/;
 
     return {
@@ -37,7 +38,7 @@ module.exports = (function() {
          */
         versionList: function(project) {
             return new Promise(function(resolve, reject) {
-                var url = "http://localhost:4000/bower/" + project + "/version";
+                var url = BASE_URL + project + "/version";
 
                 request({
                     url: url,
@@ -55,12 +56,16 @@ module.exports = (function() {
         },
 
         /**
+         * Unzips the zip file defined by project and version into a new temporary directory. That directory is returned as the
+         * result of a promise.
+         *
          * @param {String} project The name of the project
          * @return {Promise} A promise wich resolves to the temporary directory containing the unzipped archive
          */
         unzipToTmpDir: function(project, targetVersion) {
             return new Promise(function(resolve, reject) {
-                var url = "http://localhost:4000/bower/" + project + "/version/" + targetVersion;
+                var url = BASE_URL + project + "/version/" + targetVersion;
+
                 var tmpDir = tmp.dirSync();
 
                 request({"url": url})

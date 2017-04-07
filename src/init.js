@@ -2,6 +2,10 @@
 
 var iviews = require('./resolver');
 
+/**
+ * Defines a Bower resolver as defined at https://bower.io/docs/pluggable-resolvers/ .
+ * @param bower
+ */
 module.exports = function resolver(bower) {
     return {
         /**
