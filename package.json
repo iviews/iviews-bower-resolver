@@ -7,15 +7,43 @@
     "type": "git",
     "url": "git+https://github.com/phenomnomnominal/mercurial-bower-resolver.git"
   },
+  "scripts": {
+    "lint": "eslint --fix .",
+    "test": "mocha && npm run lint",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha",
+    "postcoverage": "istanbul check-coverage coverage/coverage.json --statements 100",
+    "version": "thoughtful changelog -o -a"
+  },
   "keywords": [
     "bower-resolver"
   ],
   "license": "MIT",
   "dependencies": {
-    "tmp": "0.0.31",
-    "unzip-stream": "0.1.2",
-    "request": "2.81.0"
+    "extract-zip": "^1.6.0",
+    "pify": "^2.3.0",
+    "request": "^2.81.0",
+    "tmp": "^0.0.31",
+    "unzip-stream": "^0.1.2"
   },
   "devDependencies": {
+    "bower": "^1.8.0",
+    "chai": "^3.3.0",
+    "chai-as-promised": "^6.0.0",
+    "dir-compare": "^1.4.0",
+    "dirty-chai": "^1.2.2",
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-node": "^4.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.11",
+    "thought": "^1.1.0",
+    "thought-plugin-jsdoc": "^1.0.0",
+    "thoughtful-release": "^0.3.0",
+    "trace-and-clarify-if-possible": "^1.0.0"
   }
 }

@@ -1,88 +1,103 @@
-'use strict';
+'use strict'
 
-var tmp = require('tmp');
-var request = require('request');
-var unzip = require('unzip-stream');
+var tmp = require('tmp')
+var fs = require('fs')
+var request = require('request')
+var pify = require('pify')
+var extract = pify(require('extract-zip'))
+var config = require('./config')
 
 /**
  * Exports the module definitions to handle the i-views bower components.
  *
  * @author jansorg
  */
-module.exports = (function() {
-    const BASE_URL = "http://localhost:4000/bower/";
-    const SOURCE_REGEX = /^iviews:\/\/([a-zA-Z0-9_-]+)$/;
+module.exports = (function () {
+  const SOURCE_REGEX = /^iviews:\/\/([a-zA-Z0-9_-]+)$/
 
-    return {
-        /**
-         * Checks whether the url is supported. Supported urls have the form "iviews://<componentName>". The version
-         * given in bower.json must be stripped by the caller, Bower does that automatically.
-         * @param sourceUrl The url
-         * @returns {boolean} true if the given sourceUrl is a valid i-views component url.
-         */
-        match: function(sourceUrl) {
-            return SOURCE_REGEX.test(sourceUrl);
-        },
+  return {
+    /**
+     * Checks whether the url is supported. Supported urls have the form "iviews://<componentName>". The version
+     * given in bower.json must be stripped by the caller, Bower does that automatically.
+     * @param sourceUrl The url
+     * @returns {boolean} true if the given sourceUrl is a valid i-views component url.
+     */
+    match: function (sourceUrl) {
+      return SOURCE_REGEX.test(sourceUrl)
+    },
 
-        /**
-         * @param {String} sourceUrl The url given in bower.json
-         * @return {String} The name of the project extracted from the sourceUrl
-         */
-        project: function(sourceUrl) {
-            return sourceUrl.match(SOURCE_REGEX)[1];
-        },
+    /**
+     * @param {String} sourceUrl The url given in bower.json
+     * @return {String} The name of the project extracted from the sourceUrl
+     */
+    project: function (sourceUrl) {
+      let match = sourceUrl.match(SOURCE_REGEX)
+      if (!match) {
+        throw new Error(`Invalid source url '${sourceUrl}', must match ${SOURCE_REGEX}`)
+      }
+      return match[1]
+    },
 
-        /**
-         * @param {String} project The project's name
-         * @return {Promise} Returns a promise to list the version of the given project. The promise is resolved to the list of versions [{version:"", target:""}]
-         */
-        versionList: function(project) {
-            return new Promise(function(resolve, reject) {
-                var url = BASE_URL + project + "/version";
+    /**
+     * @param {String} project The project's name
+     * @return {Promise} Returns a promise to list the version of the given project.
+     *   The promise is resolved to the list of versions [{version:"", target:""}]
+     */
+    versionList: function (project) {
+      return new Promise(function (resolve, reject) {
+        var url = `${config.baseUrl}/${project}/version`
 
-                request({
-                    url: url,
-                    json: true
-                }, function(error, response, json) {
-                    if (response.statusCode == 200 && json.versions) {
-                        resolve(json.versions.map(function(spec) {
-                            return {version: spec.version, target: spec.version};
-                        }));
-                    } else {
-                        reject("Unable to retrieve the versions from " + url + ", status:" + response.statusCode);
-                    }
-                });
-            });
-        },
+        request({
+          url: url,
+          json: true
+        }, function (error, response, json) {
+          if (error) {
+            return reject(error)
+          }
+          if (response.statusCode === 200 && json.versions) {
+            resolve(json.versions.map(function (spec) {
+              return {version: spec.version, target: 'v' + spec.version}
+            }))
+          } else {
+            reject(new Error('Unable to retrieve the versions from ' + url + ', status:' + response.statusCode))
+          }
+        })
+      })
+    },
 
-        /**
-         * Unzips the zip file defined by project and version into a new temporary directory. That directory is returned as the
-         * result of a promise.
-         *
-         * @param {String} project The name of the project
-         * @return {Promise} A promise wich resolves to the temporary directory containing the unzipped archive
-         */
-        unzipToTmpDir: function(project, targetVersion) {
-            return new Promise(function(resolve, reject) {
-                var url = BASE_URL + project + "/version/" + targetVersion;
+    /**
+     * Unzips the zip file defined by project and version into a new temporary directory. That directory is returned as the
+     * result of a promise.
+     *
+     * @param {String} project The name of the project
+     * @return {Promise} A promise wich resolves to the temporary directory containing the unzipped archive
+     */
+    unzipToTmpDir: function (project, targetVersion) {
+      return new Promise(function (resolve, reject) {
+        var url = `${config.baseUrl}/${project}/version/${targetVersion}`
 
-                var tmpDir = tmp.dirSync();
+        var tmpDir = tmp.dirSync()
+        var tmpFile = tmp.fileSync()
 
-                request({"url": url})
-                    .on('response', function(response) {
-                        if (response.statusCode !== 200) {
-                            throw new Error("Unexpected status code for " + url + ": " + response.statusCode);
-                        }
-                    })
-                    .on('error', function(error) {
-                        reject("Error while unzipping the data at " + url + ": " + error);
-                    })
-                    .pipe(unzip.Extract({path: tmpDir.name}))
-                    .on('finish', function() {
-                        //called after the pipe call finished.
-                        resolve(tmpDir.name);
-                    });
-            });
-        }
+        request({'url': url})
+          .on('response', function (response) {
+            if (response.statusCode !== 200) {
+              reject(new Error('Unexpected status code for ' + url + ': ' + response.statusCode))
+            }
+          })
+          .on('error', function (error) {
+            reject(new Error('Error while executing request ' + url + ': ' + error))
+          })
+          .pipe(fs.createWriteStream(tmpFile.name))
+          .on('error', function (error) {
+            /* istanbul ignore next */
+            reject(new Error('Error while unzipping the data at ' + url + ': ' + error))
+          })
+          .on('finish', function () {
+            // called after the pipe call finished.
+            resolve(extract(tmpFile.name, {dir: tmpDir.name}).then(() => tmpDir.name))
+          })
+      })
     }
-})();
+  }
+})()
