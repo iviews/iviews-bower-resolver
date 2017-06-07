@@ -1,12 +1,8 @@
 {
-  "name": "iviews-bower-resolver",
+  "name": "@i-views/bower-resolver",
   "version": "1.0.0",
-  "description": "i-views releases resolver for Bower",
+  "description": "bower-resolver for downloading software by i-views",
   "main": "src/init.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/phenomnomnominal/mercurial-bower-resolver.git"
-  },
   "scripts": {
     "lint": "eslint --fix .",
     "test": "mocha && npm run lint",
@@ -17,7 +13,10 @@
   "keywords": [
     "bower-resolver"
   ],
-  "license": "MIT",
+  "files": [
+    "src"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
   "dependencies": {
     "debug": "^2.6.8",
     "extract-zip": "^1.6.0",
