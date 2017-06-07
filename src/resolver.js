@@ -6,6 +6,7 @@ var request = require('request')
 var pify = require('pify')
 var extract = pify(require('extract-zip'))
 var config = require('./config')
+var debug = require('debug')('iviews-bower-resolver:resolver')
 
 /**
  * Exports the module definitions to handle the i-views bower components.
@@ -45,8 +46,8 @@ module.exports = (function () {
      */
     versionList: function (project) {
       return new Promise(function (resolve, reject) {
-        var url = `${config.baseUrl}/${project}/version`
-
+        var url = `${config.baseUrl}/${project}/metadata.json`
+        debug(`Downloading version list from ${url}`)
         request({
           url: url,
           json: true
@@ -56,7 +57,7 @@ module.exports = (function () {
           }
           if (response.statusCode === 200 && json.versions) {
             resolve(json.versions.map(function (spec) {
-              return {version: spec.version, target: 'v' + spec.version}
+              return {version: spec.version, target: spec.file}
             }))
           } else {
             reject(new Error('Unable to retrieve the versions from ' + url + ', status:' + response.statusCode))
@@ -70,15 +71,17 @@ module.exports = (function () {
      * result of a promise.
      *
      * @param {String} project The name of the project
+     * @param {String} file the filename of the zip-file within the project directory (on the download server)
      * @return {Promise} A promise wich resolves to the temporary directory containing the unzipped archive
      */
-    unzipToTmpDir: function (project, targetVersion) {
+    unzipToTmpDir: function (project, file) {
       return new Promise(function (resolve, reject) {
-        var url = `${config.baseUrl}/${project}/version/${targetVersion}`
+        var url = `${config.baseUrl}/${project}/${file}`
 
         var tmpDir = tmp.dirSync()
         var tmpFile = tmp.fileSync()
 
+        debug(`Downloading version zip file from ${url}`)
         request({'url': url})
           .on('response', function (response) {
             if (response.statusCode !== 200) {

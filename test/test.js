@@ -50,27 +50,27 @@ describe('The bower resolver', function () {
   describe('The "versionList"-method', function () {
     it('should return the version list for the url', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version')
+        .get('/viewconfigmapper/metadata.json')
         .reply(200, {
           'versions': [
-            {'version': '3.0.21', 'target': 'ID858_386348319'},
-            {'version': '5.0.4', 'target': 'ID872_52072462'},
-            {'version': '3.0.23', 'target': 'ID866_272455287'}
+            {'version': '3.0.21', 'file': 'viewconfigmapper-3.0.21.zip'},
+            {'version': '5.0.4', 'file': 'viewconfigmapper-5.0.4.zip'},
+            {'version': '3.0.23', 'file': 'viewconfigmapper-3.0.23.zip'}
           ]
         })
 
       return expect(resolver.versionList('viewconfigmapper')).to.eventually.deep.equal(
         [
-          {'target': 'v3.0.21', 'version': '3.0.21'},
-          {'target': 'v5.0.4', 'version': '5.0.4'},
-          {'target': 'v3.0.23', 'version': '3.0.23'}
+          {'target': 'viewconfigmapper-3.0.21.zip', 'version': '3.0.21'},
+          {'target': 'viewconfigmapper-5.0.4.zip', 'version': '5.0.4'},
+          {'target': 'viewconfigmapper-3.0.23.zip', 'version': '3.0.23'}
         ]
       )
     })
 
     it('should throw an error if the project does not exist', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version')
+        .get('/viewconfigmapper/metadata.json')
         .reply(404, {})
 
       return expect(resolver.versionList('viewconfigmapper')).to.be.rejectedWith(/Unable to retrieve the versions from/)
@@ -78,7 +78,7 @@ describe('The bower resolver', function () {
 
     it('should throw an error if the project does not exist', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version')
+        .get('/viewconfigmapper/metadata.json')
         .replyWithError('something awful happened')
 
       return expect(resolver.versionList('viewconfigmapper')).to.be.rejectedWith(/something awful happened/)
@@ -88,12 +88,12 @@ describe('The bower resolver', function () {
   describe('The "unzipToTmpDir" method', function () {
     it('should unzip valid responses', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version/5.0.4')
+        .get('/viewconfigmapper/viewconfigmapper-5.0.4.zip')
         .reply(200, function (uri, requestBody) {
           return fs.createReadStream('test/fixture/file.zip')
         })
 
-      let dirDiffs = resolver.unzipToTmpDir('viewconfigmapper', '5.0.4')
+      let dirDiffs = resolver.unzipToTmpDir('viewconfigmapper', 'viewconfigmapper-5.0.4.zip')
         .then((tmpDir) => {
           return dircompare.compareSync('test/fixture/zip-content', tmpDir, {compareContent: true})
             .diffSet
@@ -105,28 +105,28 @@ describe('The bower resolver', function () {
 
     it('should reject broken zip files', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version/5.0.4')
+        .get('/viewconfigmapper/viewconfigmapper-5.0.4.zip')
         .reply(200, function (uri, requestBody) {
           return fs.createReadStream('test/fixture/zip-content/index.js')
         })
 
-      return expect(resolver.unzipToTmpDir('viewconfigmapper', '5.0.4')).to.be.rejectedWith(/end of central directory/)
+      return expect(resolver.unzipToTmpDir('viewconfigmapper', 'viewconfigmapper-5.0.4.zip')).to.be.rejectedWith(/end of central directory/)
     })
 
     it('should reject invalid responses', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version/0.1.0')
+        .get('/viewconfigmapper/viewconfigmapper-0.1.0.zip')
         .reply(404)
 
-      return expect(resolver.unzipToTmpDir('viewconfigmapper', '0.1.0')).to.be.rejectedWith(/Unexpected status code/)
+      return expect(resolver.unzipToTmpDir('viewconfigmapper', 'viewconfigmapper-0.1.0.zip')).to.be.rejectedWith(/Unexpected status code/)
     })
 
     it('should reject http-errors', function () {
       nock(config.baseUrl)
-        .get('/viewconfigmapper/version/0.1.0')
+        .get('/viewconfigmapper/viewconfigmapper-0.1.0.zip')
         .replyWithError('something awful happened')
 
-      return expect(resolver.unzipToTmpDir('viewconfigmapper', '0.1.0')).to.be.rejectedWith(/something awful happened/)
+      return expect(resolver.unzipToTmpDir('viewconfigmapper', 'viewconfigmapper-0.1.0.zip')).to.be.rejectedWith(/something awful happened/)
     })
   })
 })

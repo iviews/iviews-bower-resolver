@@ -1,5 +1,5 @@
 {
   "resolvers": [
-    "../src/init"
+    "../"
   ]
 }

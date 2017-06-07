@@ -1,8 +1,7 @@
 {
   "name": "bower-test",
   "dependencies": {
-    "viewconfigmapper": "iviews://viewconfigmapper#5.0.4",
-    "vcm-demo": "iviews://viewconfigmapper-demo#5.0.4"
+    "viewconfigmapper": "iviews://viewconfigmapper#5.0.4"
   },
   "license": "MIT",
   "private": true
