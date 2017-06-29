@@ -1,8 +1,7 @@
 {
-  "name": "bower-test",
+  "name": "example-project",
   "dependencies": {
     "viewconfigmapper": "iviews://viewconfigmapper#5.0.4"
   },
-  "license": "MIT",
-  "private": true
+  "license": "MIT"
 }

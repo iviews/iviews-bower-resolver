@@ -1,0 +1,23 @@
+Make sure that the following files in your project are similar to what is shown here:
+
+## .bowerrc
+
+Include `{{package.name}}` in your`.bowerrc` file to tell Bower that it should use this resolver for the dependencies defined in `bower.json`:
+
+{{example 'examples/example-project/.bowerrc'}}
+
+## bower.json
+
+Add a reference to an i-views dependency in your `bower.json`. The version is specified by the reference part, e.g. `#5.0.4`.
+If no version is given then the latest version will be automatically downloaded by Bower.
+
+{{example 'examples/example-project/bower.json'}}
+
+When you run
+
+```
+bower install
+```
+
+the resolver will download the `viewconfigmapper` from the i-views download servers. 
+
