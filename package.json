@@ -8,7 +8,8 @@
     "test": "mocha && npm run lint",
     "coverage": "istanbul cover ./node_modules/.bin/_mocha",
     "postcoverage": "istanbul check-coverage coverage/coverage.json --statements 100",
-    "version": "thoughtful changelog -o -a"
+    "version": "npm run thought && thoughtful changelog -o -a",
+    "thought": "thought run -a"
   },
   "keywords": [
     "bower-resolver"
@@ -41,7 +42,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "nock": "^9.0.11",
-    "thought": "^1.1.0",
+    "thought": "^1.2.0",
     "thought-plugin-jsdoc": "^1.0.0",
     "thoughtful-release": "^0.3.0",
     "trace-and-clarify-if-possible": "^1.0.0"
