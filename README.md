@@ -10,7 +10,8 @@
 <a href="https://i-views.com">
     <img src="http://documentation.i-views.com/5.0/assets/img/i-views-logo.svg" width="200" align="right">
 </a>
-[intelligent views gmbh (i-views)](https://i-views.com) is one of the leading providers of semantic
+
+[intelligent views gmbh](https://i-views.com) (i-views) is one of the leading providers of semantic
 technologies and applications in the German-speaking region.  The company, which started
 out in 1997 as a spin-off of the Fraunhofer  Society, has over 30 employees and is based
 in Darmstadt, Germany. The  company produces the i-views Smart Data Engine, which provides
@@ -46,7 +47,7 @@ Include `@i-views/bower-resolver` in your`.bowerrc` file to tell Bower that it s
 ```
 {
   "resolvers": [
-    "../../"
+    "@i-views/bower-resolver"
   ]
 }
 ```

@@ -1,5 +1,5 @@
 {
   "resolvers": [
-    "../../"
+    "@i-views/bower-resolver"
   ]
 }
