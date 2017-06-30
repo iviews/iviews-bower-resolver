@@ -54,6 +54,6 @@ or with [release-tools](https://npmjs.com/package/release-tools)
 ```bash
 npm run test
 npm run coverage
-npm_release [ --bugfix | --minor | --major ]
+npm_release [ a.a.a | --bugfix | --minor | --major ]
 ```
 
