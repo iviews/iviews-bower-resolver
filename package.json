@@ -46,5 +46,18 @@
     "thought-plugin-jsdoc": "^1.0.1",
     "thoughtful-release": "^0.3.1",
     "trace-and-clarify-if-possible": "^1.0.0"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iviews/iviews-bower-resolver.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/iviews/iviews-bower-resolver/issues"
+  },
+  "homepage": "https://github.com/iviews/iviews-bower-resolver#readme"
 }
