@@ -1,6 +1,6 @@
 {
   "name": "@i-views/bower-resolver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "bower-resolver for downloading software by i-views",
   "main": "src/init.js",
   "scripts": {

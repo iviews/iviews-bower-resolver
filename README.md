@@ -85,6 +85,9 @@ the resolver will download the `viewconfigmapper` from the i-views download serv
 See [LICENSE.md](LICENSE.md) for details.
 
 
+# Release-Notes
+ 
+For release notes, see [CHANGELOG.md](CHANGELOG.md)
  
 # Contributing guidelines
 
