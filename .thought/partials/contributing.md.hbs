@@ -30,3 +30,30 @@ You can fork and clone the repo from github. Run
 
 [standard-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
 [standard-url]: https://github.com/feross/standard
+
+### Releasing
+
+This package uses `thoughtful-release` for creating the changelog. It is automatically 
+invoked when bumping the package-version with `npm version` along with `thought` to update the documentation.
+
+This only works properly, if you have the EDITOR environment-variable set to point to your favorite editor.
+In order to perform the release, please do
+
+```bash
+npm run test
+npm run coverage
+
+// Manually 
+npm version [ a.a.a | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git]
+npm publish 
+git push --tags origin master
+```
+
+or with {{npm 'release-tools'}}
+
+```bash
+npm run test
+npm run coverage
+npm_release [ a.a.a | --bugfix | --minor | --major ]
+```
+
