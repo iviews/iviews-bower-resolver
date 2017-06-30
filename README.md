@@ -1,6 +1,6 @@
 # @i-views/bower-resolver 
 
-[![NPM version](https://badge.fury.io/js/@i-views/bower-resolver.svg)](http://badge.fury.io/js/@i-views/bower-resolver)
+[![NPM version](https://img.shields.io/npm/v/@i-views/bower-resolver.svg)](https://npmjs.com/package/@i-views/bower-resolver)
 
 
 > bower-resolver for downloading software by i-views
