@@ -29,7 +29,7 @@ If you want to know more about i-views, please have a look at the following web-
 
 In addition the our core-product, we provide a web-frontend called the `viewconfigmapper` that can be used and configured with our backend. The `@i-views/bower-resolver` helps you download and use this frontend in your own projects.
 
-Please note that while the `@i-views/bower-resolver` is released under the MIT-License, most of the packages it downloads are under a propriatery license.
+Please note that while the `@i-views/bower-resolver` is released under the MIT-License, most of the packages it downloads are under a proprietary license.
 
 
 # Installation
