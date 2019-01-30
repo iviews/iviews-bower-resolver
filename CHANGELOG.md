@@ -1,6 +1,11 @@
 # Release-Notes
 
 <a name="current-release"></a>
+# Version 1.0.4 (Wed, 30 Jan 2019 14:38:13 GMT)
+
+* [55500ea](https://github.com/iviews/iviews-bower-resolver/commit/55500ea) docs: add deprecation notice - Nils Knappmeier
+* [a5118cd](https://github.com/iviews/iviews-bower-resolver/commit/a5118cd) doc: fix typo - smoldaner
+
 # Version 1.0.3 (Fri, 30 Jun 2017 10:09:21 GMT)
 
 * [33ad6a1](https://github.com/iviews/iviews-bower-resolver/commit/33ad6a1) docs: Use npm-badge from shields.io - Nils Knappmeier
