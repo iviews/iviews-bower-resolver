@@ -24,12 +24,15 @@ If you want to know more about i-views, please have a look at the following web-
 * Technical Whitepaper: https://i-views.com/de/technical-whitepaper-download/
 * Documentation (german): https://i-views.com/de/smart-data-engine/dokumentation/
 
-
 # Purpose
+
+**Deprecation notice: The bower-resolver is deprecated. We have moved away from bower, so this package will 
+not be updated anymore. The source for downloading the package will also not receive updates
+anymore. Please contact us, if you need current versions of our software.**
 
 In addition the our core-product, we provide a web-frontend called the `viewconfigmapper` that can be used and configured with our backend. The `@i-views/bower-resolver` helps you download and use this frontend in your own projects.
 
-Please note that while the `@i-views/bower-resolver` is released under the MIT-License, most of the packages it downloads are under a proprietary license.
+Please note that while the `@i-views/bower-resolver` is released under the MIT-License, most of the packages it downloads are under a propriatery license.
 
 
 # Installation
